@@ -180,6 +180,7 @@ public class UnityAdsWebData {
 
 			try {
 				queryParams = String.format("%s&%s=%s", queryParams, UnityAdsConstants.UNITY_ADS_INIT_QUERYPARAM_PLATFORM_KEY, "android");
+				queryParams = String.format("%s&%s=%s", queryParams, UnityAdsConstants.UNITY_ADS_INIT_QUERYPARAM_NETWORK_KEY, UnityAdsProperties.NETWORK);
 
 				String advertisingId = UnityAdsDevice.getAdvertisingTrackingId();
 				if(advertisingId != null) {

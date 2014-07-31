@@ -28,6 +28,7 @@ public class UnityAdsConstants {
 
 	public static final String UNITY_ADS_WEBVIEW_DATAPARAM_CAMPAIGNDATA_KEY = "campaignData";
 	public static final String UNITY_ADS_WEBVIEW_DATAPARAM_PLATFORM_KEY = "platform";
+	public static final String UNITY_ADS_WEBVIEW_DATAPARAM_NETWORK_KEY = "network";
 	public static final String UNITY_ADS_WEBVIEW_DATAPARAM_DEVICEID_KEY = "deviceId";
 	public static final String UNITY_ADS_WEBVIEW_DATAPARAM_ANDROIDID_KEY = "androidId";
 	public static final String UNITY_ADS_WEBVIEW_DATAPARAM_RAWANDROIDID_KEY = "rawAndroidId";
@@ -138,6 +139,7 @@ public class UnityAdsConstants {
 	public static final String UNITY_ADS_INIT_QUERYPARAM_SERIALID_KEY = "serialId";
 	public static final String UNITY_ADS_INIT_QUERYPARAM_DEVICETYPE_KEY = "deviceType";
 	public static final String UNITY_ADS_INIT_QUERYPARAM_PLATFORM_KEY = "platform";
+	public static final String UNITY_ADS_INIT_QUERYPARAM_NETWORK_KEY = "network";
 	public static final String UNITY_ADS_INIT_QUERYPARAM_GAMEID_KEY = "gameId";
 	public static final String UNITY_ADS_INIT_QUERYPARAM_OPENUDID_KEY = "openUdid";
 	public static final String UNITY_ADS_INIT_QUERYPARAM_MACADDRESS_KEY = "macAddress";

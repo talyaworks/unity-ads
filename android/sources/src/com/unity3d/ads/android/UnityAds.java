@@ -163,6 +163,13 @@ public class UnityAds implements IUnityAdsCacheListener,
 		
 		return false;
 	}
+
+	public static void setNetwork(String network) {
+		if(network != null && network.length() > 0) {
+			UnityAdsProperties.NETWORK = network;
+			// TODO: Refresh campaigns
+		}
+	}
 	
 	public static boolean setZone(String zoneId) {
 		if(!_showingAds) {

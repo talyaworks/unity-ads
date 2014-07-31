@@ -112,6 +112,10 @@ public class UnityAdsUnityWrapper implements IUnityAdsListener {
 	public boolean canShow () {
 		return UnityAds.canShow();
 	}
+	
+	public void setNetwork(String network) {
+		UnityAds.setNetwork(network);
+	}
 
 	public boolean hasMultipleRewardItems () {
 		return UnityAds.hasMultipleRewardItems();
