@@ -167,7 +167,10 @@ public class UnityAds implements IUnityAdsCacheListener,
 	public static void setNetwork(String network) {
 		if(network != null && network.length() > 0) {
 			UnityAdsProperties.NETWORK = network;
-			refreshCampaigns(true);
+
+			if(_initialized) {
+				refreshCampaigns(true);
+			}
 		}
 	}
 	
@@ -808,10 +811,14 @@ public class UnityAds implements IUnityAdsCacheListener,
 
 	private static void refreshCampaigns(boolean forceRefresh) {
 		if(forceRefresh) {
-			_refreshAfterShowAds = false;
-			UnityAdsDeviceLog.debug("Forced ad plan refresh");
-			if(webdata != null) {
-				webdata.initCampaigns();
+			if(_showingAds) {
+				_refreshAfterShowAds = true;
+			} else {
+				_refreshAfterShowAds = false;
+				UnityAdsDeviceLog.debug("Forced ad plan refresh");
+				if(webdata != null) {
+					webdata.initCampaigns();
+				}
 			}
 			return;
 		}
