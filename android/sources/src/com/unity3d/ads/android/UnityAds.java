@@ -167,7 +167,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	public static void setNetwork(String network) {
 		if(network != null && network.length() > 0) {
 			UnityAdsProperties.NETWORK = network;
-			// TODO: Refresh campaigns
+			refreshCampaigns(true);
 		}
 	}
 	
@@ -805,8 +805,17 @@ public class UnityAds implements IUnityAdsCacheListener,
 		_pauseTimer = new Timer();
 		_pauseTimer.scheduleAtFixedRate(_pauseScreenTimer, 0, 50);
 	}
-	
-	private static void refreshCampaigns() {
+
+	private static void refreshCampaigns(boolean forceRefresh) {
+		if(forceRefresh) {
+			_refreshAfterShowAds = false;
+			UnityAdsDeviceLog.debug("Forced ad plan refresh");
+			if(webdata != null) {
+				webdata.initCampaigns();
+			}
+			return;
+		}
+
 		if(_refreshAfterShowAds) {
 			_refreshAfterShowAds = false;
 			UnityAdsDeviceLog.debug("Starting delayed ad plan refresh");
@@ -819,14 +828,18 @@ public class UnityAds implements IUnityAdsCacheListener,
 		if(_campaignRefreshTimerDeadline > 0 && SystemClock.elapsedRealtime() > _campaignRefreshTimerDeadline) {
 			removeCampaignRefreshTimer();
 			UnityAdsDeviceLog.debug("Refreshing ad plan from server due to timer deadline");
-			webdata.initCampaigns();
+			if(webdata != null) {
+				webdata.initCampaigns();
+			}
 			return;
 		}
 
 		if (UnityAdsProperties.CAMPAIGN_REFRESH_VIEWS_MAX > 0) {
 			if(UnityAdsProperties.CAMPAIGN_REFRESH_VIEWS_COUNT >= UnityAdsProperties.CAMPAIGN_REFRESH_VIEWS_MAX) {
 				UnityAdsDeviceLog.debug("Refreshing ad plan from server due to endscreen limit");
-				webdata.initCampaigns();
+				if(webdata != null) {
+					webdata.initCampaigns();
+				}
 				return;
 			}
 		}
@@ -923,7 +936,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 							if (_adsListener != null)
 								_adsListener.onHide();
 
-							refreshCampaigns();
+							refreshCampaigns(false);
 						}
 					}, 30);
 				}
