@@ -47,6 +47,7 @@ extern NSString * const kUnityAdsWebViewViewTypeNone;
 
 extern NSString * const kUnityAdsWebViewDataParamCampaignDataKey;
 extern NSString * const kUnityAdsWebViewDataParamPlatformKey;
+extern NSString * const kUnityAdsWebViewDataParamNetworkKey;
 extern NSString * const kUnityAdsWebViewDataParamDeviceIdKey;
 extern NSString * const kUnityAdsWebViewDataParamGameIdKey;
 extern NSString * const kUnityAdsWebViewDataParamDeviceTypeKey;
@@ -180,6 +181,7 @@ extern NSString * const kUnityAdsDeviceSimulator;
 extern NSString * const kUnityAdsInitQueryParamDeviceIdKey;
 extern NSString * const kUnityAdsInitQueryParamDeviceTypeKey;
 extern NSString * const kUnityAdsInitQueryParamPlatformKey;
+extern NSString * const kUnityAdsInitQueryParamNetworkKey;
 extern NSString * const kUnityAdsInitQueryParamGameIdKey;
 extern NSString * const kUnityAdsInitQueryParamOpenUdidKey;
 extern NSString * const kUnityAdsInitQueryParamMacAddressKey;

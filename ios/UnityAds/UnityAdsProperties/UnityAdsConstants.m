@@ -33,6 +33,7 @@ NSString * const kUnityAdsWebViewViewTypeNone = @"none";
 
 NSString * const kUnityAdsWebViewDataParamCampaignDataKey = @"campaignData";
 NSString * const kUnityAdsWebViewDataParamPlatformKey = @"platform";
+NSString * const kUnityAdsWebViewDataParamNetworkKey = @"network";
 NSString * const kUnityAdsWebViewDataParamDeviceIdKey = @"deviceId";
 NSString * const kUnityAdsWebViewDataParamGameIdKey = @"gameId";
 NSString * const kUnityAdsWebViewDataParamDeviceTypeKey = @"deviceType";
@@ -168,6 +169,7 @@ NSString * const kUnityAdsDeviceSimulator = @"simulator";
 NSString * const kUnityAdsInitQueryParamDeviceIdKey = @"deviceId";
 NSString * const kUnityAdsInitQueryParamDeviceTypeKey = @"deviceType";
 NSString * const kUnityAdsInitQueryParamPlatformKey = @"platform";
+NSString * const kUnityAdsInitQueryParamNetworkKey = @"network";
 NSString * const kUnityAdsInitQueryParamGameIdKey = @"gameId";
 NSString * const kUnityAdsInitQueryParamOpenUdidKey = @"openUdid";
 NSString * const kUnityAdsInitQueryParamOdin1IdKey = @"odin1Id";

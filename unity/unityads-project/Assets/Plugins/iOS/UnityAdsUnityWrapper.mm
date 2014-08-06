@@ -143,6 +143,11 @@ extern "C" {
 	bool canShow () {
         return [[UnityAds sharedInstance] canShow];
     }
+
+  void setNetwork(const char * rawNetwork) {
+    NSString * network = UnityAdsCreateNSString(rawNetwork);
+    [[UnityAds sharedInstance] setNetwork:network];
+  }
 	
 	bool hasMultipleRewardItems () {
         return [[UnityAds sharedInstance] hasMultipleRewardItems];

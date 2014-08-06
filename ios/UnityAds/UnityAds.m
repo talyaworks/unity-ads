@@ -148,6 +148,15 @@ static UnityAds *sharedUnityAdsInstance = nil;
 	return [self adsCanBeShown];
 }
 
+- (void)setNetwork:(NSString *)network {
+  UALOG_DEBUG(@"");
+  if(network && [network length] > 0 && ![[[UnityAdsProperties sharedInstance] network] isEqualToString:network]) {
+    UALOG_DEBUG(@"Setting network to %@", network);
+    [[UnityAdsProperties sharedInstance] setNetwork:network];
+    // TODO: refresh ad plan
+  }
+}
+
 - (BOOL)setZone:(NSString *)zoneId {
   if (![[UnityAdsMainViewController sharedInstance] mainControllerVisible]) {
     return [[UnityAdsZoneManager sharedInstance] setCurrentZone:zoneId];

@@ -62,6 +62,7 @@ extern NSString * const kUnityAdsOptionVideoUsesDeviceOrientation;
 - (BOOL)setViewController:(UIViewController *)viewController;
 - (BOOL)canShowAds;
 - (BOOL)canShow;
+- (void)setNetwork:(NSString *)network;
 - (BOOL)setZone:(NSString *)zoneId;
 - (BOOL)setZone:(NSString *)zoneId withRewardItem:(NSString *)rewardItemKey;
 - (BOOL)show:(NSDictionary *)options;
