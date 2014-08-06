@@ -165,7 +165,9 @@ public class UnityAds implements IUnityAdsCacheListener,
 	}
 
 	public static void setNetwork(String network) {
-		if(network != null && network.length() > 0) {
+		UnityAdsDeviceLog.entered();
+		UnityAdsDeviceLog.debug(network);
+		if(network != null && network.length() > 0 && UnityAdsProperties.NETWORK != network) {
 			UnityAdsProperties.NETWORK = network;
 
 			if(_initialized) {
