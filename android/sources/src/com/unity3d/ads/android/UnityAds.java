@@ -15,6 +15,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -74,6 +76,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	private static boolean _adsReadySent = false;
 	private static boolean _openRequestFromDeveloper = false;
 	private static boolean _refreshAfterShowAds = false;
+	private static boolean _fixMainview = false;
 	private static AlertDialog _alertDialog = null;
 		
 	private static TimerTask _pauseScreenTimer = null;
@@ -244,16 +247,29 @@ public class UnityAds implements IUnityAdsCacheListener,
 			webdata.getViewableVideoPlanCampaigns() != null && 
 			webdata.getViewableVideoPlanCampaigns().size() > 0;
 	}
-	
+
 	public static boolean canShow () {
-		return !_showingAds && 
-			webdata != null && 
-			webdata.getVideoPlanCampaigns() != null && 
-			webdata.getVideoPlanCampaigns().size() > 0;
+		boolean isConnected = true;
+		Activity currentActivity = UnityAdsProperties.getCurrentActivity();
+
+		if(currentActivity != null) {
+			ConnectivityManager cm = (ConnectivityManager)currentActivity.getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+			if(cm != null) {
+				NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+				isConnected = activeNetwork != null && activeNetwork.isConnected();
+			}
+		}
+
+		return !_showingAds &&
+				isConnected &&
+				webdata != null &&
+				webdata.getVideoPlanCampaigns() != null &&
+				webdata.getVideoPlanCampaigns().size() > 0;
 	}
-	
+
 	/* PUBLIC MULTIPLE REWARD ITEM SUPPORT */
-	
+
 	public static boolean hasMultipleRewardItems () {
 		UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
 		if(zone.isIncentivized()) {
@@ -421,7 +437,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 			}
 		}
 		
-		if (!dataFetchFailed && !sdkIsCurrent && UnityAdsUtils.isDebuggable(UnityAdsProperties.getCurrentActivity())) {
+		if (!dataFetchFailed && !sdkIsCurrent && UnityAdsProperties.getCurrentActivity() != null && UnityAdsUtils.isDebuggable(UnityAdsProperties.getCurrentActivity())) {
 			_alertDialog = new AlertDialog.Builder(UnityAdsProperties.getCurrentActivity()).create();
 			_alertDialog.setTitle("Unity Ads");
 			_alertDialog.setMessage("You are not running the latest version of Unity Ads android. Please update your version (this dialog won't appear in release builds).");
@@ -777,7 +793,22 @@ public class UnityAds implements IUnityAdsCacheListener,
 			UnityAdsDeviceLog.error("Weird error: " + e.getStackTrace());
 		}
 	}
-	
+
+	public static void checkMainview() {
+		if(_fixMainview) {
+			_fixMainview = false;
+			if(mainview != null) {
+				mainview.fixActivityAttachment();
+			}
+		}
+	}
+
+	public static void handleFullscreenDestroy() {
+		if(_showingAds) {
+			_fixMainview = true;
+		}
+	}
+
 	private static void cancelPauseScreenTimer () {
 		if (_pauseScreenTimer != null) {
 			_pauseScreenTimer.cancel();
@@ -796,8 +827,9 @@ public class UnityAds implements IUnityAdsCacheListener,
 		_pauseScreenTimer = new TimerTask() {
 			@Override
 			public void run() {
-				if(UnityAdsProperties.CURRENT_ACTIVITY != null) {
-					PowerManager pm = (PowerManager)UnityAdsProperties.getCurrentActivity().getBaseContext().getSystemService(Context.POWER_SERVICE);			
+				Activity currentActivity = UnityAdsProperties.getCurrentActivity();
+				if(currentActivity != null) {
+					PowerManager pm = (PowerManager)currentActivity.getBaseContext().getSystemService(Context.POWER_SERVICE);			
 					if (!pm.isScreenOn()) {
 						mainview.webview.sendNativeEventToWebApp(UnityAdsConstants.UNITY_ADS_NATIVEEVENT_HIDESPINNER, new JSONObject());
 						close();
