@@ -82,6 +82,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	private static boolean _fixMainview = false;
 	private static boolean _preventVideoDoubleStart = false;
 	private static boolean _singleTaskApplication = false;
+	private static boolean _hidingHandled = false;
 	private static AlertDialog _alertDialog = null;
 		
 	private static TimerTask _pauseScreenTimer = null;
@@ -235,6 +236,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 				_openRequestFromDeveloper = true;
 				_showingAds = true;
 				_preventVideoDoubleStart = false;
+				_hidingHandled = false;
 				startFullscreenActivity();
 				return _showingAds;
 			}
@@ -997,10 +999,20 @@ public class UnityAds implements IUnityAdsCacheListener,
 	}
 
 	private static void hideOperations() {
+		if(_hidingHandled) {
+			return;
+		}
+
 		Handler handler = new Handler(Looper.getMainLooper());
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
+				if(_hidingHandled) {
+					return;
+				}
+
+				_hidingHandled = true;
+
 				final JSONObject data = new JSONObject();
 				
 				try  {
