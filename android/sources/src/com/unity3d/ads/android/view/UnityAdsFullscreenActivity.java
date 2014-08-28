@@ -14,7 +14,19 @@ public class UnityAdsFullscreenActivity extends Activity {
         super.onCreate(savedInstanceState);
    		UnityAds.changeActivity(this);
     }
-    
+
+    @Override
+    public void onStart() {
+    	UnityAdsDeviceLog.entered();
+    	super.onStart();
+    }
+
+    @Override
+    public void onRestart() {
+    	UnityAdsDeviceLog.entered();
+    	super.onRestart();
+    }
+
     @Override
     public void onResume () {
 		UnityAdsDeviceLog.entered();   	
@@ -22,14 +34,26 @@ public class UnityAdsFullscreenActivity extends Activity {
    		UnityAds.changeActivity(this);
    		UnityAds.checkMainview();
     }
-    
+
+    @Override
+    public void onPause() {
+    	UnityAdsDeviceLog.entered();
+    	super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+    	UnityAdsDeviceLog.entered();
+    	super.onStop();
+    }
+
     @Override
 	protected void onDestroy() {
 		UnityAdsDeviceLog.entered();   	
     	super.onDestroy();
     	UnityAds.handleFullscreenDestroy();
 	}
-    
+
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
     	return false;

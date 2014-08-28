@@ -69,7 +69,7 @@ public class UnityAdsTestStartActivity extends Activity implements IUnityAdsList
 		    	_statusImage.setVisibility(View.VISIBLE);
 		    	UnityAds.setTestDeveloperId(((EditText)findViewById(R.id.unityads_example_developer_id_data)).getText().toString());
 		    	UnityAds.setTestOptionsId(((EditText)findViewById(R.id.options_id_data)).getText().toString());
-				UnityAds.init(_self, "16", _self);
+				UnityAds.init(_self, "12540", _self);
 				UnityAds.setListener(_self);
 			}
 		});
@@ -152,17 +152,17 @@ public class UnityAdsTestStartActivity extends Activity implements IUnityAdsList
 			@Override
 			public void onClick(View v) {
 				// Open with options test
-				Map<String, Object> optionsMap = new HashMap<String, Object>();
-				optionsMap.put(UnityAds.UNITY_ADS_OPTION_NOOFFERSCREEN_KEY, false);
-				optionsMap.put(UnityAds.UNITY_ADS_OPTION_OPENANIMATED_KEY, false);
-				optionsMap.put(UnityAds.UNITY_ADS_OPTION_GAMERSID_KEY, "gom");
-				optionsMap.put(UnityAds.UNITY_ADS_OPTION_MUTE_VIDEO_SOUNDS, false);
-				optionsMap.put(UnityAds.UNITY_ADS_OPTION_VIDEO_USES_DEVICE_ORIENTATION, false);
-				
-				UnityAds.show(optionsMap);
+//				Map<String, Object> optionsMap = new HashMap<String, Object>();
+//				optionsMap.put(UnityAds.UNITY_ADS_OPTION_NOOFFERSCREEN_KEY, false);
+//				optionsMap.put(UnityAds.UNITY_ADS_OPTION_OPENANIMATED_KEY, false);
+//				optionsMap.put(UnityAds.UNITY_ADS_OPTION_GAMERSID_KEY, "gom");
+//				optionsMap.put(UnityAds.UNITY_ADS_OPTION_MUTE_VIDEO_SOUNDS, false);
+//				optionsMap.put(UnityAds.UNITY_ADS_OPTION_VIDEO_USES_DEVICE_ORIENTATION, false);
+//				
+//				UnityAds.show(optionsMap);
 				
 				// Open without options (defaults)
-				//UnityAds.show();
+				UnityAds.show();
 			}
 		});
     	_openButton.setVisibility(View.VISIBLE);
