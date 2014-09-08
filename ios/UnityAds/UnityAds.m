@@ -310,14 +310,12 @@ static UnityAds *sharedUnityAdsInstance = nil;
   
   if ([name isEqualToString:UIApplicationWillEnterForegroundNotification]) {
     UAAssert([NSThread isMainThread]);
-    
-    if ([[UnityAdsMainViewController sharedInstance] mainControllerVisible]) {
-      UALOG_DEBUG(@"Ad view visible, not refreshing.");
-    }
-    else {
-      [self refreshAds];
-    }
+    [self refreshAds];
   }
+}
+
+- (void)refreshCampaignsOnTimer {
+  
 }
 
 - (BOOL)adsCanBeShown {
@@ -330,6 +328,11 @@ static UnityAds *sharedUnityAdsInstance = nil;
 #pragma mark - Private data refreshing
 
 - (void)refreshAds {
+  if ([[UnityAdsMainViewController sharedInstance] mainControllerVisible]) {
+    UALOG_DEBUG(@"Ad view visible, not refreshing.");
+    return;
+  }
+  
 	if ([[UnityAdsProperties sharedInstance] adsGameId] == nil) {
 		UALOG_ERROR(@"Unity Ads has not been started properly. Launch with -startWithGameId: first.");
 		return;
