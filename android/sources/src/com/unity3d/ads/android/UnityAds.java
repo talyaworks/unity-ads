@@ -37,6 +37,7 @@ import com.unity3d.ads.android.item.UnityAdsRewardItem;
 import com.unity3d.ads.android.item.UnityAdsRewardItemManager;
 import com.unity3d.ads.android.properties.UnityAdsConstants;
 import com.unity3d.ads.android.properties.UnityAdsProperties;
+import com.unity3d.ads.android.video.UnityAdsVideoPausedView;
 import com.unity3d.ads.android.view.UnityAdsFullscreenActivity;
 import com.unity3d.ads.android.view.UnityAdsMainView;
 import com.unity3d.ads.android.view.UnityAdsMainView.UnityAdsMainViewAction;
@@ -280,7 +281,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 
 	public static boolean hasMultipleRewardItems () {
 		UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-		if(zone.isIncentivized()) {
+		if(zone != null && zone.isIncentivized()) {
 			UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 			return itemManager.itemCount() > 1;
 		}		
@@ -289,7 +290,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	
 	public static ArrayList<String> getRewardItemKeys () {
 		UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-		if(zone.isIncentivized()) {
+		if(zone != null && zone.isIncentivized()) {
 			UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 			ArrayList<UnityAdsRewardItem> rewardItems = itemManager.allItems();
 			ArrayList<String> rewardItemKeys = new ArrayList<String>();
@@ -304,7 +305,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	
 	public static String getDefaultRewardItemKey () {
 		UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-		if(zone.isIncentivized()) {
+		if(zone != null && zone.isIncentivized()) {
 			UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 			return itemManager.getDefaultItem().getKey();
 		}		
@@ -313,7 +314,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	
 	public static String getCurrentRewardItemKey () {
 		UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-		if(zone.isIncentivized()) {
+		if(zone != null && zone.isIncentivized()) {
 			UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 			return itemManager.getCurrentItem().getKey();
 		}			
@@ -323,7 +324,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	public static boolean setRewardItemKey (String rewardItemKey) {
 		if (canShow()) {
 			UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-			if(zone.isIncentivized()) {
+			if(zone != null && zone.isIncentivized()) {
 				UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 				return itemManager.setCurrentItem(rewardItemKey);
 			}
@@ -334,7 +335,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	public static void setDefaultRewardItemAsRewardItem () {
 		if (canShow()) {
 			UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-			if(zone.isIncentivized()) {
+			if(zone != null && zone.isIncentivized()) {
 				UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 				itemManager.setCurrentItem(itemManager.getDefaultItem().getKey());
 			}
@@ -343,7 +344,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 	
 	public static Map<String, String> getRewardItemDetailsWithKey (String rewardItemKey) {
 		UnityAdsZone zone = UnityAdsWebData.getZoneManager().getCurrentZone();
-		if(zone.isIncentivized()) {
+		if(zone != null && zone.isIncentivized()) {
 			UnityAdsRewardItemManager itemManager = ((UnityAdsIncentivizedZone)zone).itemManager();
 			UnityAdsRewardItem rewardItem = itemManager.getItem(rewardItemKey);
 			if (rewardItem != null) {
@@ -670,6 +671,7 @@ public class UnityAds implements IUnityAdsCacheListener,
 		UnityAdsProperties.UNITY_ADS_GAME_ID = gameId;
 		UnityAdsProperties.BASE_ACTIVITY = new WeakReference<Activity>(activity);
 		UnityAdsProperties.CURRENT_ACTIVITY = new WeakReference<Activity>(activity);
+		UnityAdsVideoPausedView.initScreenMetrics(activity);
 		
 		UnityAdsDeviceLog.debug("Is debuggable=" + UnityAdsUtils.isDebuggable(activity));
 		

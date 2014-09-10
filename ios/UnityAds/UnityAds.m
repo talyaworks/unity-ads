@@ -179,7 +179,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
   UnityAdsViewStateType state = kUnityAdsViewStateTypeOfferScreen;
   
   id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-  if(currentZone) {
+  if(currentZone != nil) {
     [currentZone mergeOptions:options];
     
     if ([currentZone noOfferScreen]) {
@@ -201,7 +201,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 
 - (BOOL)hasMultipleRewardItems {
   id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-  if(currentZone && [currentZone isIncentivized]) {
+  if(currentZone != nil && [currentZone isIncentivized]) {
     id rewardManager = [((UnityAdsIncentivizedZone *)currentZone) itemManager];
     if(rewardManager != nil && [rewardManager itemCount] > 1) {
       return TRUE;
@@ -212,7 +212,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 
 - (NSArray *)getRewardItemKeys {
   id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-  if(currentZone && [currentZone isIncentivized]) {
+  if(currentZone != nil && [currentZone isIncentivized]) {
     return [[((UnityAdsIncentivizedZone *)currentZone) itemManager] allItems];
   }
   return nil;
@@ -220,7 +220,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 
 - (NSString *)getDefaultRewardItemKey {
   id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-  if(currentZone && [currentZone isIncentivized]) {
+  if(currentZone != nil && [currentZone isIncentivized]) {
     return [[((UnityAdsIncentivizedZone *)currentZone) itemManager] getDefaultItem].key;
   }
   return nil;
@@ -228,7 +228,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 
 - (NSString *)getCurrentRewardItemKey {
   id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-  if(currentZone && [currentZone isIncentivized]) {
+  if(currentZone != nil && [currentZone isIncentivized]) {
     return [[((UnityAdsIncentivizedZone *)currentZone) itemManager] getCurrentItem].key;
   }
   return nil;
@@ -238,7 +238,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 - (BOOL)setRewardItemKey:(NSString *)rewardItemKey {
   if (![[UnityAdsMainViewController sharedInstance] mainControllerVisible]) {
     id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-    if(currentZone && [currentZone isIncentivized]) {
+    if(currentZone != nil && [currentZone isIncentivized]) {
       return [[((UnityAdsIncentivizedZone *)currentZone) itemManager] setCurrentItem:rewardItemKey];
     }
   }
@@ -248,7 +248,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 - (void)setDefaultRewardItemAsRewardItem {
   if (![[UnityAdsMainViewController sharedInstance] mainControllerVisible]) {
     id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-    if(currentZone && [currentZone isIncentivized]) {
+    if(currentZone != nil && [currentZone isIncentivized]) {
       id itemManager = [((UnityAdsIncentivizedZone *)currentZone) itemManager];
       [itemManager setCurrentItem:[itemManager getDefaultItem].key];
     }
@@ -257,7 +257,7 @@ static UnityAds *sharedUnityAdsInstance = nil;
 
 - (NSDictionary *)getRewardItemDetailsWithKey:(NSString *)rewardItemKey {
   id currentZone = [[UnityAdsZoneManager sharedInstance] getCurrentZone];
-  if(currentZone && [currentZone isIncentivized]) {
+  if(currentZone != nil && [currentZone isIncentivized]) {
     id itemManager = [((UnityAdsIncentivizedZone *)currentZone) itemManager];
     id item = [itemManager getItem:rewardItemKey];
     if(item != nil) {
